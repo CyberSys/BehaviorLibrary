@@ -14,6 +14,13 @@ namespace BehaviorLibrary
             this.called = new List<BehaviorComponent>();
         }
 
+        public TreeContext(TreeContext oldContext) : this()
+        {
+            this.OldContext = oldContext;
+        }
+
+        public TreeContext OldContext { get; private set; }
+
         public void AddToCalling(BehaviorComponent behavior)
         {
             this.calling.Add(behavior);
