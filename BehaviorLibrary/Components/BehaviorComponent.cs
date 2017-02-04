@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BehaviorLibrary.Components
+﻿namespace BehaviorLibrary.Components
 {
     public abstract class  BehaviorComponent
     {
@@ -11,6 +6,15 @@ namespace BehaviorLibrary.Components
 
         public BehaviorComponent() { }
 
-        public abstract BehaviorReturnCode Behave();
+        public abstract BehaviorReturnCode OnBehave(TreeContext context);
+
+        public BehaviorReturnCode Behave(TreeContext context)
+        {
+            context.AddToCalling(this);
+            var result = this.OnBehave(context);
+            this.ReturnCode = result;
+            context.AddToCalled(this);
+            return result;
+        }
     }
 }

@@ -22,14 +22,14 @@ namespace BehaviorLibrary.Components.Decorators
         {
             _Behavior = behavior;
         }
-        
+
         /// <summary>
         /// performs the given behavior
         /// </summary>
         /// <returns>the behaviors return code</returns>
-        public override BehaviorReturnCode Behave()
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
-            ReturnCode = _Behavior.Behave();
+            ReturnCode = _Behavior.Behave(context);
             ReturnCode = BehaviorReturnCode.Running;
             return BehaviorReturnCode.Running;
         }

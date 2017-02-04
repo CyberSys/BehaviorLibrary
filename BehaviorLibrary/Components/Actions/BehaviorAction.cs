@@ -9,6 +9,7 @@ namespace BehaviorLibrary.Components.Actions
     {
 
         private Func<BehaviorReturnCode> _Action;
+        private Func<BehaviorComponent, TreeContext, BehaviorReturnCode> _Action2;
 
         public BehaviorAction() { }
 
@@ -17,24 +18,36 @@ namespace BehaviorLibrary.Components.Actions
             _Action = action;
         }
 
-        public override BehaviorReturnCode Behave()
+        public BehaviorAction(Func<BehaviorComponent, TreeContext, BehaviorReturnCode> action)
+        {
+            _Action2 = action;
+        }
+
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
             try
             {
-                switch (_Action.Invoke())
+                if (this._Action != null)
                 {
-                    case BehaviorReturnCode.Success:
-                        ReturnCode = BehaviorReturnCode.Success;
-                        return ReturnCode;
-                    case BehaviorReturnCode.Failure:
-                        ReturnCode = BehaviorReturnCode.Failure;
-                        return ReturnCode;
-                    case BehaviorReturnCode.Running:
-                        ReturnCode = BehaviorReturnCode.Running;
-                        return ReturnCode;
-                    default:
-                        ReturnCode = BehaviorReturnCode.Failure;
-                        return ReturnCode;
+                    switch (_Action.Invoke())
+                    {
+                        case BehaviorReturnCode.Success:
+                            ReturnCode = BehaviorReturnCode.Success;
+                            return ReturnCode;
+                        case BehaviorReturnCode.Failure:
+                            ReturnCode = BehaviorReturnCode.Failure;
+                            return ReturnCode;
+                        case BehaviorReturnCode.Running:
+                            ReturnCode = BehaviorReturnCode.Running;
+                            return ReturnCode;
+                        default:
+                            ReturnCode = BehaviorReturnCode.Failure;
+                            return ReturnCode;
+                    }
+                }
+                else
+                {
+                    return _Action2.Invoke(this, context);
                 }
             }
             catch (Exception e)

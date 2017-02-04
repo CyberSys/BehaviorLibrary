@@ -25,7 +25,7 @@ namespace BehaviorLibrary.Components.Conditionals
         /// performs the given behavior
         /// </summary>
         /// <returns>the behaviors return code</returns>
-        public override BehaviorReturnCode Behave()
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
 
             try

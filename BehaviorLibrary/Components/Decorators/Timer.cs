@@ -33,7 +33,7 @@ namespace BehaviorLibrary.Components.Decorators
         /// performs the given behavior
         /// </summary>
         /// <returns>the behaviors return code</returns>
-        public override BehaviorReturnCode Behave()
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace BehaviorLibrary.Components.Decorators
                 if (_TimeElapsed >= _WaitTime)
                 {
                     _TimeElapsed = 0;
-                    ReturnCode = _Behavior.Behave();
+                    ReturnCode = _Behavior.Behave(context);
                     return ReturnCode;
                 }
                 else

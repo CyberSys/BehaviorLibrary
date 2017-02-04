@@ -20,16 +20,16 @@ namespace BehaviorLibrary
 			this._Behaviors = behaviors;
 		}
 
-		/// <summary>
-		/// performs the given behavior
-		/// </summary>
-		/// <returns>the behaviors return code</returns>
-		public override BehaviorReturnCode Behave(){
+        /// <summary>
+        /// performs the given behavior
+        /// </summary>
+        /// <returns>the behaviors return code</returns>
+        public override BehaviorReturnCode OnBehave(TreeContext context) { 
 
 			//start from last remembered position
 			for(; _LastBehavior < _Behaviors.Length;_LastBehavior++){
 				try{
-					switch (_Behaviors[_LastBehavior].Behave()){
+					switch (_Behaviors[_LastBehavior].Behave(context)){
 					case BehaviorReturnCode.Failure:
 						_LastBehavior = 0;
 						ReturnCode = BehaviorReturnCode.Failure;

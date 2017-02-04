@@ -28,13 +28,13 @@ namespace BehaviorLibrary.Components.Decorators
         }
 
 
-        public override BehaviorReturnCode Behave()
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
             try
             {
                 if (_RandomFunction.Invoke() <= _Probability)
                 {
-                    ReturnCode = _Behavior.Behave();
+                    ReturnCode = _Behavior.Behave(context);
                     return ReturnCode;
                 }
                 else

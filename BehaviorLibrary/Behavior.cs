@@ -47,11 +47,11 @@ namespace BehaviorLibrary
         /// <summary>
         /// perform the behavior
         /// </summary>
-        public BehaviorReturnCode Behave()
+        public BehaviorReturnCode Behave(TreeContext context)
         {
             try
             {
-                switch (_Root.Behave())
+                switch (_Root.Behave(context))
                 {
                     case BehaviorReturnCode.Failure:
                         ReturnCode = BehaviorReturnCode.Failure;

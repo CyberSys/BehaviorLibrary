@@ -36,7 +36,7 @@ namespace BehaviorLibrary.Components.Utility
 			this._utility_function = utility_function;
         }
     
-        public override BehaviorReturnCode Behave()
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
 			try{
 				UtilityVector func_vector = this._utility_function.Invoke ();
@@ -63,7 +63,7 @@ namespace BehaviorLibrary.Components.Utility
 				}
 
 				//execute best pair match and return result
-				this.ReturnCode = best_match.behavior.Behave();
+				this.ReturnCode = best_match.behavior.Behave(context);
 				return this.ReturnCode;
 			}catch(Exception e){
 				#if DEBUG

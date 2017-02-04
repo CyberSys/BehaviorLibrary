@@ -32,13 +32,13 @@ namespace BehaviorLibrary.Components.Composites
         /// performs the given behavior
         /// </summary>
         /// <returns>the behaviors return code</returns>
-        public override BehaviorReturnCode Behave()
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
             while (_selections < _selLength)
             {
                 try
                 {
-                    switch (_Behaviors[_selections].Behave())
+                    switch (_Behaviors[_selections].Behave(context))
                     {
                         case BehaviorReturnCode.Failure:
                             _selections++;

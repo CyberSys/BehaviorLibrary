@@ -29,13 +29,13 @@ namespace BehaviorLibrary.Components.Composites
         /// performs the given behavior
         /// </summary>
         /// <returns>the behaviors return code</returns>
-        public override BehaviorReturnCode Behave()
+        public override BehaviorReturnCode OnBehave(TreeContext context)
         {
             _Random = new Random(DateTime.Now.Millisecond);
 
             try
             {
-                switch (_Behaviors[_Random.Next(0, _Behaviors.Length)].Behave())
+                switch (_Behaviors[_Random.Next(0, _Behaviors.Length)].Behave(context))
                 {
                     case BehaviorReturnCode.Failure:
                         ReturnCode = BehaviorReturnCode.Failure;
