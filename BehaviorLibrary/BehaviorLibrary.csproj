@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="Behavior.cs" />
     <Compile Include="Components\Actions\BehaviorAction.cs" />
+    <Compile Include="Components\Actions\OnNotCalled.cs" />
     <Compile Include="Components\BehaviorComponent.cs" />
+    <Compile Include="Components\CallHierarchy.cs" />
     <Compile Include="Components\Composites\BinarySelector.cs" />
     <Compile Include="Components\Composites\ConditionalSelector.cs" />
     <Compile Include="Components\Composites\RandomSelector.cs" />

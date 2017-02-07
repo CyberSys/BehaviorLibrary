@@ -10,11 +10,10 @@
 
         public BehaviorReturnCode Behave(TreeContext context)
         {
-            context.AddToCalling(this);
-            var result = this.OnBehave(context);
-            this.ReturnCode = result;
-            context.AddToCalled(this);
-            return result;
+            context.OnAboutToCall(this);
+            this.ReturnCode = this.OnBehave(context);
+            context.OnCalled(this, this.ReturnCode);
+            return this.ReturnCode;
         }
     }
 }
