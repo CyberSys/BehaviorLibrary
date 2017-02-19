@@ -55,16 +55,16 @@ namespace BehaviorLibrary
                 {
                     case BehaviorReturnCode.Failure:
                         ReturnCode = BehaviorReturnCode.Failure;
-                        return ReturnCode;
+                        break;
                     case BehaviorReturnCode.Success:
                         ReturnCode = BehaviorReturnCode.Success;
-                        return ReturnCode;
+                        break;
                     case BehaviorReturnCode.Running:
                         ReturnCode = BehaviorReturnCode.Running;
-                        return ReturnCode;
+                        break;
                     default:
                         ReturnCode = BehaviorReturnCode.Running;
-                        return ReturnCode;
+                        break;
                 }
             }
             catch (Exception e)
@@ -73,8 +73,9 @@ namespace BehaviorLibrary
                 Console.Error.WriteLine(e.ToString());
 #endif
                 ReturnCode = BehaviorReturnCode.Failure;
-                return ReturnCode;
             }
+
+            return this.ReturnCode;
         }
     }
 }

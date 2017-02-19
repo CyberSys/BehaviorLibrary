@@ -22,6 +22,13 @@ namespace BehaviorLibrary.Components
             {
                 if (array[i] != otherArray[i])
                 {
+                    string oldCallTree = "";
+                    otherArray.ToList().ForEach(x => oldCallTree += x.DebugName + System.Environment.NewLine);
+
+                    string newCallTree = "";
+                    otherArray.ToList().ForEach(x => newCallTree += x.DebugName + System.Environment.NewLine);
+
+                    System.Console.Error.WriteLine("Called with {0}, now {1}. Mismatch at {2}", oldCallTree, newCallTree, i);
                     return false;
                 }
             }

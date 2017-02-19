@@ -16,11 +16,13 @@ namespace BehaviorLibrary.Components.Actions
         public BehaviorAction(Func<BehaviorReturnCode> action)
         {
             _Action = action;
+            this.DebugName = action.Method.Name;
         }
 
         public BehaviorAction(Func<BehaviorComponent, TreeContext, BehaviorReturnCode> action)
         {
             _Action2 = action;
+            this.DebugName = action.Method.Name;
         }
 
         public override BehaviorReturnCode OnBehave(TreeContext context)

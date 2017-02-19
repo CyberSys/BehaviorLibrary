@@ -6,6 +6,8 @@
 
         public BehaviorComponent() { }
 
+        public string DebugName { get; set; }
+
         public abstract BehaviorReturnCode OnBehave(TreeContext context);
 
         public BehaviorReturnCode Behave(TreeContext context)

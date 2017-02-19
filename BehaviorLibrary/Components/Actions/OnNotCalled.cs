@@ -1,6 +1,4 @@
-﻿using BehaviorLibrary.Components;
-
-namespace BehaviorLibrary.Actions
+﻿namespace BehaviorLibrary.Components.Actions
 {
     /// <summary>
     /// Provides a way to specifiy behavior for when a behavior is no longer called, due to a different subtree being executed.
@@ -32,7 +30,7 @@ namespace BehaviorLibrary.Actions
             var currentHierarchy = context.CallingHierarchy;
             if (context.OldContext != null)
             {
-                return currentHierarchy.Matches(context.OldContext.CallingHierarchy);
+                return !currentHierarchy.Matches(context.OldContext.CallingHierarchy);
             }
 
             return false;

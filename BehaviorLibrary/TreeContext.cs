@@ -1,5 +1,5 @@
-﻿using BehaviorLibrary.Actions;
-using BehaviorLibrary.Components;
+﻿using BehaviorLibrary.Components;
+using BehaviorLibrary.Components.Actions;
 using System.Collections.Generic;
 
 namespace BehaviorLibrary
@@ -10,6 +10,7 @@ namespace BehaviorLibrary
         private List<BehaviorComponent> called;
         private int callCount;
         private List<OnNotCalled> onNotCalledBehaviors;
+        private bool isInvokingFinalizer;
 
         public TreeContext()
         {
@@ -17,6 +18,9 @@ namespace BehaviorLibrary
             this.called = new List<BehaviorComponent>();
             this.onNotCalledBehaviors = new List<OnNotCalled>();
         }
+
+        public BehaviorComponent[] Calling {  get { return this.calling.ToArray(); } }
+        public BehaviorComponent[] Called { get { return this.called.ToArray(); } }
 
         public TreeContext(TreeContext oldContext) : this()
         {
@@ -57,16 +61,6 @@ namespace BehaviorLibrary
         {
             this.AddToCalling(caller);
             this.callCount++;
-
-            // TODO: If we don't match the call tree, we don't know before whether or not something is going to be called.
-            // So all we can do is check after everything has been called and then fire those that weren't called.
-            foreach (var onNotCalledBehavior in this.OldContext.onNotCalledBehaviors)
-            {
-                if (onNotCalledBehavior.CanInvokeFinalizer(this, caller))
-                {
-                    onNotCalledBehavior.InvokeFinalizer(this);
-                }
-            }
         }
 
         public void RegisterOnNotCalledBehavior(OnNotCalled onNotCalledBehavior)
@@ -77,6 +71,26 @@ namespace BehaviorLibrary
         public void OnCalled(BehaviorComponent called, BehaviorReturnCode result)
         {
             this.AddToCalled(called);
+
+            // Check if we just called the root node, so are done with the tree.
+            if (!this.isInvokingFinalizer && this.calling.Count > 0 && this.calling[0] == called)
+            {
+                this.ProcessFinalizers(this.calling[0]);
+            }
+        }
+
+        private void ProcessFinalizers(BehaviorComponent rootNode)
+        {
+            if (this.OldContext == null) return;
+            foreach (var onNotCalledBehavior in this.OldContext.onNotCalledBehaviors)
+            {
+                if (!this.HasBeenCalled(onNotCalledBehavior))
+                {
+                    this.isInvokingFinalizer = true;
+                    onNotCalledBehavior.InvokeFinalizer(this);
+                    this.isInvokingFinalizer = false;
+                }
+            }
         }
     }
 }
